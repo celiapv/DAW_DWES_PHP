@@ -24,7 +24,7 @@
  <body>
 
 <?php
-    include_once 'estilos.php';    
+    
 
     $notas = array(
 
@@ -79,25 +79,9 @@
 
                     $promAlum = round($promAlum/count($nota["promedio"]), 0, PHP_ROUND_HALF_DOWN);
 
-                    
-                    
-                    $texto = "";
-                    $estilo = "aprobado";
-
-                    if($promAlum >= 5){
-                        $texto = "Enhorabuena";
-                    }
-                    else{
-                        $texto = "Nos vemos en Marzo";
-                        $estilo = "noAprobado";
-                    }
-
                     echo "<tr><td>".$nota["id"]."</td>";
                     echo "<td>".$nota["nombre"]."</td>";
-                    echo "<td class= '".$estilo."'>".$promAlum."</td>
-                    <td><a href='mostrarDetalleAlumno.php?id=".$nota["id"]."'>Ver detalle</td>
-                    <td>".$texto."</td>
-                    </tr>";
+                    echo "<td>".$promAlum."</td></tr>";
 
                     if($promAlum >= 5){
                         $totalAprob++;
