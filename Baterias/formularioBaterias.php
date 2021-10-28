@@ -53,6 +53,8 @@
 
                 //Puntero al inicio
                 rewind($abrir);
+                //Hasta que el puntero no se encuentre al final
+                //seguimos leyendo
                 while(!feof($abrir)){
                     $unaBateria = fgets($abrir);
                     echo $unaBateria;
