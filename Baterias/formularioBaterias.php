@@ -20,13 +20,63 @@
 
 
  </head>
+<?php 
+    function escribirBateria($linea){
+        //Abrir el archivo
+        $archivo = 'datosBaterias.txt';
+        $abrir = fopen($archivo, 'a');
 
+        //Enviar información de los productos
+        fwrite($abrir, $linea.PHP_EOL);
+
+        //Cerrar el archivo
+        fclose($abrir);
+    }
+
+    function leerBaterias(){
+        //Definición del nombre del archivo
+        $archivo = "datosBaterias.txt";
+
+        //Verificando la existencia del archivo
+        if (!file_exists($archivo)){
+
+            echo 'Archivo BATERIAS no existe.!!';
+
+        }else{
+
+            if(filesize($archivo) > 0){
+                //Abriendo en forma de lectura
+                $abrir = fopen($archivo, "r");
+
+                //Obtener el contenido a partir de la lectura
+                //$contenido = fgets($abrir, filesize($archivo));
+
+                //Puntero al inicio
+                rewind($abrir);
+                while(!feof($abrir)){
+                    $unaBateria = fgets($abrir);
+                    echo $unaBateria;
+                }
+
+                //Cerrando el archivo
+                fclose($abrir);
+                
+                //Imprimir el contenido del archivo
+                //echo $contenido;
+            }
+            else{
+                echo "El fichero esta vacio";
+            }
+        }
+    }
+?>
 <?php 
     $codigo = 0;
     $marca = "";
     $carga = 0;
     $capacidad = 0;
     $ciclos = 0;
+    $tipoId = "";
 
     $tipos = array(
         array("id" => 1,"nombre"=>"Tipo 1"),
@@ -61,9 +111,9 @@
         $tipoId = $_POST['tipo'];
     }
 
-    array_push($baterias, array("id" => $codigo, "marca" => $marca));
-
-    print_r($baterias);
+    $bateria = $codigo.";".$tipoId.";".$marca.";".$carga.";".$capacidad.";".$ciclos.";";
+    //escribirBateria($bateria);
+    leerBaterias();
 ?>
 
  <body>
