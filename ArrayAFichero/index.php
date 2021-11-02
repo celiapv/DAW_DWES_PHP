@@ -1,17 +1,3 @@
-<!DOCTYPE html>
-
-<html>
-
- <head>
-
- <meta charset="UTF-8">
-
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
- <title>Formulario</title>
-
-
- </head>
 <?php
 
     $datos = [
@@ -103,14 +89,3 @@
 
     recogerLinea($datos);
 ?>
-
- <body>
-
-<div class="container">
-
-<form action="index.php" method="post">  
-
-
-</form>
-</body>
-</html>
