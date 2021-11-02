@@ -145,7 +145,7 @@
     <p>Capacidad: <input type="text" name="capacidad" value="<?php echo $capacidad?>"/> mA</p>
     <p>Ciclos de vida: <input type="text" name="ciclos" value="<?php echo $ciclos?>"/></p>
 
-    <p><input type="submit" value="tabla" name="tabla"></p>
+    <p><input type="submit" value="tabla" name="Tabla"></p>
 
 </form>
 </body>
