@@ -10,6 +10,7 @@ $lacteo = 0;
 $cereal = 0;
 $proteina = 0;
 $proveedor = '';
+$tipo = '';
 
 if (isset($_POST["nombre"])) {
     $nombre=$_POST["nombre"]; 
@@ -73,7 +74,7 @@ function obtenerAllProductos(){
     return $productos;
 }
 
-function insertarProducto(){
+
     
 
     $conexion = obtenerConexion();
@@ -97,7 +98,7 @@ function insertarProducto(){
         echo "Error: " . $e->getMessage();
 
     }
-}
+
 $conexion = null;
 
 ?>
