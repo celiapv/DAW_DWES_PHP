@@ -1,6 +1,6 @@
 <?php
 
-include_once 'datosconexionBD.php';
+include_once 'conexion3.php';
 
 $nombre='';
 $marca=-1;
@@ -9,6 +9,7 @@ $stock = 0;
 $lacteo = 0;
 $cereal = 0;
 $proteina = 0;
+$proveedor = '';
 
 if (isset($_POST["nombre"])) {
     $nombre=$_POST["nombre"]; 
@@ -22,42 +23,81 @@ if (isset($_POST["caducidad"])) {
 if (isset($_POST["stock"])) {
     $stock=$_POST["stock"]; 
 }
-if(isset($_POST["lacteo"])){
-    $lacteo = $_POST["lacteo"];
+if(isset($_POST["tipo"])){
+    $tipo = $_POST["tipo"];
 }
-if(isset($_POST["cereal"])){
-    $cereal = $_POST["cereal"];
-}
-if(isset($_POST["proteina"])){
-    $proteina = $_POST["proteina"];
+if(isset($_POST["proveedor"])){
+    $proveedor = $_POST["proveedor"];
 }
 
-try {
 
-    $con = new PDO("mysql:host=".SERVIDOR.";dbname=".BBDD, USUARIO, CLAVE);
-    // Establecemos el modo de error de PDO para que salten excepciones
-    $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    // preparar y vincular parámetros
-     $stmt = $con->prepare("INSERT INTO productos (nombre,marca,caducidad,stock,lacteo,cereal,proteina) VALUES (:nombre, :marca, :caducidad, :stock, :lacteo, :cereal, :proteina)");
-     $stmt->bindParam(':nombre', $nombre);
-     $stmt->bindParam(':marca', $marca);
-     $stmt->bindParam(':caducidad', $caducidad);
-     $stmt->bindParam(':stock', $stock);
-     $stmt->bindParam(':lacteo', $lacteo);
-     $stmt->bindParam(':cereal', $cereal);
-     $stmt->bindParam(':proteina', $proteina);
-
-    $stmt->execute();
+function obtenerProductoPorId($id){
+    $conexion = obtenerConexion();
+    $producto = '';
     
-    echo "Nuevas filas insertadas correctamente";
+    try {
 
-} catch(PDOException $e) {
+        $sql = "SELECT * FROM productos WHERE id=".$id;
+        $producto = $conexion->prepare($sql);
+        $producto->execute();
+    
+    
+    } catch(PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
 
-    echo "Error: " . $e->getMessage();
-
+    return $producto;
 }
 
-$con = null;
+function obtenerAllProductos(){
+
+    $conexion = obtenerConexion();
+    $productos = '';
+    
+    try {
+
+        $sql = "SELECT * FROM productos";
+        $productos = $conexion->prepare($sql);
+        $productos->execute();
+    
+        //OPCIÓN 1 
+        foreach($productos as $row){
+            echo $row['id'] . " " . $row['nombre']. " " . $row['numero'] ." " . $row['email'] ;
+            echo "<br/>";
+        }
+    
+    } catch(PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+
+    return $productos;
+}
+
+function insertarProducto(){
+    
+
+    $conexion = obtenerConexion();
+
+    try {
+        // preparar y vincular parámetros
+        $stmt = $conexion->prepare("INSERT INTO productos (nombre,marca,caducidad,stock,tipo, proveedor) VALUES (:nombre, :marca, :caducidad, :stock, :tipo, :proveedor)");
+        $stmt->bindParam(':nombre', $nombre);
+        $stmt->bindParam(':marca', $marca);
+        $stmt->bindParam(':caducidad', $caducidad);
+        $stmt->bindParam(':stock', $stock);
+        $stmt->bindParam(':tipo', $tipo);
+        $stmt->bindParam(':proveedor', $proveedor);
+
+        $stmt->execute();
+        
+        echo "Nuevas filas insertadas correctamente";
+
+    } catch(PDOException $e) {
+
+        echo "Error: " . $e->getMessage();
+
+    }
+}
+$conexion = null;
 
 ?>

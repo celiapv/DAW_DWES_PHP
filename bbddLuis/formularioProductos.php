@@ -41,13 +41,28 @@
     <p> Fecha caducidad: <input type="date" name="caducidad"/></p>
     <p> Stock: <input type="number" name="stock"/></p>
 
-    <p>  
-        Lácteo <input type="checkbox" name="lacteo" value="1">
+    <?php
+        include_once 'tipoProductoDAO.php';
 
-        Cereal <input type="checkbox" name="cereal" value="1">
+        $tipos = obtenerAllTipos();
 
-        Proteina <input type="checkbox" name="proteina" value="1">
+        echo '<select name="tipos">';
 
+        foreach($tipos as $tipo){
+            echo '<option value="'.$tipo['id'].'">'.$tipo['nombre'].'</option>';
+        }
+
+        echo '</select>';
+    ?>
+
+    <p>
+        Proveedor:
+        <select name="proveedor">
+            <option value="empresa1">Empresa 1</option>
+            <option value="empresa2">Empresa 2</option>
+            <option value="empresa3">Empresa 3</option>
+            <option value="empresa4">Empresa 4</option>
+        </select>
     </p>
 
     <p><input type="submit" value="Enviar" name="B1"></p>
